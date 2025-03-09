@@ -1,12 +1,19 @@
-import React from 'react'
-import RecipeSlider from './components/RecipeSlider'
 
-function App() {
+import React from 'react';
+import RecipeSlider from './RecipeSlider';
+import ThemeToggle from './ThemeToggle';
+import { ThemeProvider } from './ThemeContext';
+import './styles.css'; // Make sure to import your CSS file
+
+const App = () => {
   return (
-    <div className="app">
-      <RecipeSlider />
-    </div>
-  )
-}
+    <ThemeProvider>
+      <div className="app">
+        <ThemeToggle />
+        <RecipeSlider />
+      </div>
+    </ThemeProvider>
+  );
+};
 
-export default App
+export default App;
