@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-// Update FontAwesome imports to use individual imports instead of the whole library
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
   faHeart, 
@@ -11,6 +10,8 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 const RecipeCard = ({ recipe, index }) => {
+  // Make sure you're only using index as passed in through props
+  // Do not redeclare index inside this component
   const [isActionsVisible, setIsActionsVisible] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
 
@@ -20,9 +21,12 @@ const RecipeCard = ({ recipe, index }) => {
 
   const toggleLike = (e) => {
     e.preventDefault();
-    e.stopPropagation(); // Prevent event bubbling
+    e.stopPropagation();
     setIsLiked(!isLiked);
   };
+
+  // You can use index here if needed
+  // For example: console.log(`Recipe at index ${index}`);
 
   return (
     <div className="swiper-slide post">
@@ -101,7 +105,12 @@ RecipeCard.propTypes = {
     avatar: PropTypes.string.isRequired,
     author: PropTypes.string.isRequired,
   }).isRequired,
-  index: PropTypes.number.isRequired,
+  index: PropTypes.number,
+};
+
+// Add default props in case index is not provided
+RecipeCard.defaultProps = {
+  index: 0,
 };
 
 export default RecipeCard;
