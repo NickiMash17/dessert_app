@@ -1,12 +1,64 @@
-# React + Vite
+# Dessert Delights 🍰
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Discover the world's most exquisite dessert recipes, crafted with love and perfection.
 
-Currently, two official plugins are available:
+## Features
+- 🌟 Browse a curated collection of beautiful dessert recipes (cakes, cheesecakes, macarons, and more)
+- 🔍 Search recipes by name, author, or tags
+- 🏷️ Filter by dessert category
+- ❤️ Like your favorite recipes
+- 🎲 "Surprise Me!" random recipe button
+- 👩‍🍳 View detailed recipe instructions and ingredients
+- ⭐ User reviews and ratings
+- 🌙 Light/Dark mode toggle
+- ✨ Modern, glassmorphism-inspired UI
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Screenshots
+<!-- Add screenshots here if available -->
 
-## Expanding the ESLint configuration
+## Tech Stack
+- [React](https://react.dev/)
+- [Vite](https://vitejs.dev/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Lucide React Icons](https://lucide.dev/)
+- [Swiper.js](https://swiperjs.com/) (for sliders)
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Getting Started
+
+1. **Clone the repository:**
+   ```bash
+   git clone <your-repo-url>
+   cd dessert_app
+   ```
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
+3. **Start the development server:**
+   ```bash
+   npm run dev
+   ```
+4. Open [http://localhost:5173](http://localhost:5173) to view the app in your browser.
+
+## Project Structure
+```
+dessert_app/
+  ├─ public/
+  ├─ src/
+  │   ├─ components/      # Reusable UI components
+  │   ├─ assets/          # Images and static assets
+  │   ├─ App.jsx          # Main app logic
+  │   ├─ main.jsx         # Entry point
+  │   └─ index.css        # Tailwind CSS imports
+  ├─ package.json
+  └─ ...
+```
+
+## Contributing
+Pull requests are welcome! For major changes, please open an issue first to discuss what you would like to change.
+
+## License
+[MIT](LICENSE)
+
+---
+Made with ❤️ for dessert lovers everywhere.
