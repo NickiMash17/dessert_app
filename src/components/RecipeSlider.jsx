@@ -1,5 +1,8 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import RecipeCard from './RecipeCard';
+import SearchBar from './SearchBar';
+import CategoryChips from './CategoryChips';
+import RecipeModal from './RecipeModal';
 // Updated Swiper imports
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Scrollbar } from 'swiper/modules';
@@ -7,6 +10,15 @@ import { Scrollbar } from 'swiper/modules';
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/scrollbar';
+
+const recipeCategoryMap = {
+  'Homemade Ice Cream': 'Ice Cream',
+  'Pancake': 'Cakes',
+  'Macaron': 'Macarons',
+  'Cheesecake': 'Cheesecake',
+  'Donuts': 'Donuts',
+  'Rolo Cheesecake': 'Cheesecake',
+};
 
 const RecipeSlider = () => {
   // Recipe data
@@ -55,11 +67,55 @@ const RecipeSlider = () => {
     }
   ];
 
+  const [search, setSearch] = useState('');
+  const [category, setCategory] = useState('All');
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedRecipe, setSelectedRecipe] = useState(null);
+  const [shake, setShake] = useState(false);
+  const swiperRef = useRef(null);
+
+  const filteredRecipes = recipes.filter(recipe => {
+    const matchesSearch =
+      recipe.name.toLowerCase().includes(search.toLowerCase()) ||
+      recipe.author.toLowerCase().includes(search.toLowerCase());
+    const matchesCategory =
+      category === 'All' || recipeCategoryMap[recipe.name] === category;
+    return matchesSearch && matchesCategory;
+  });
+
+  // Handler to open modal with recipe
+  const handleShowRecipe = (recipe) => {
+    setSelectedRecipe(recipe);
+    setModalOpen(true);
+  };
+
+  // Random Dessert Button Handler
+  const handleRandomDessert = () => {
+    if (!filteredRecipes.length) return;
+    setShake(true);
+    setTimeout(() => setShake(false), 500);
+    const randomIdx = Math.floor(Math.random() * filteredRecipes.length);
+    if (swiperRef.current && swiperRef.current.swiper) {
+      swiperRef.current.swiper.slideTo(randomIdx);
+    }
+  };
+
   return (
-    <section>
+    <section className="section">
       <div className="recipe-container">
         <h1>The Dessert Recipes</h1>
+        <SearchBar value={search} onChange={setSearch} />
+        <CategoryChips selected={category} onSelect={setCategory} />
+        <button
+          className={`random-dessert-btn premium-btn${shake ? ' shake' : ''}`}
+          onClick={handleRandomDessert}
+          type="button"
+          style={{ marginBottom: '1.5rem', marginTop: '0.5rem' }}
+        >
+          🍰 Surprise Me!
+        </button>
         <Swiper
+          ref={swiperRef}
           modules={[Scrollbar]}
           spaceBetween={30}
           slidesPerView={1}
@@ -80,12 +136,29 @@ const RecipeSlider = () => {
           }}
           className="swiper"
         >
-          {recipes.map((recipe, index) => (
-            <SwiperSlide key={recipe.id}>
-              <RecipeCard recipe={recipe} index={index + 1} />
+          {filteredRecipes.length === 0 ? (
+            <SwiperSlide>
+              <div style={{ padding: '2rem', color: 'var(--text-secondary)' }}>
+                No recipes found.
+              </div>
             </SwiperSlide>
-          ))}
+          ) : (
+            filteredRecipes.map((recipe, index) => (
+              <SwiperSlide key={recipe.id}>
+                <RecipeCard
+                  recipe={recipe}
+                  index={index + 1}
+                  onShowRecipe={() => handleShowRecipe(recipe)}
+                />
+              </SwiperSlide>
+            ))
+          )}
         </Swiper>
+        <RecipeModal
+          recipe={selectedRecipe}
+          open={modalOpen}
+          onClose={() => setModalOpen(false)}
+        />
       </div>
     </section>
   );
